@@ -17,10 +17,10 @@ float avg(float* x, int size){
 
 // returns the variance of X
 float var(float* x, int size){
-	float avg = avg(x,size);
+	float av = avg(x,size);
     float sum = 0;
     for (int i=0;i<size;i++){
-        sum = sum +powf(x[i]-avg,2);
+        sum = sum +powf(x[i]-av,2);
     }
     return sum/size;
 
