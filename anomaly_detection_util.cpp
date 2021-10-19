@@ -1,7 +1,7 @@
 /*
  * animaly_detection_util.cpp
  *
- * Author: write your ID and name here
+ * Author: Gidon Tobin 320518020
  */
 
 #include <math.h>
@@ -20,7 +20,7 @@ float var(float* x, int size){
 	float av = avg(x,size);
     float sum = 0;
     for (int i=0;i<size;i++){
-        sum = sum +powf(x[i]-av,2);
+        sum = sum +((x[i]-av)*(x[i]-av));
     }
     return sum/size;
 
@@ -35,6 +35,12 @@ float cov(float* x, float* y, int size){
         sum = sum + x[i]*y[i];
     }
     sum = sum/size;
+    if(avX<0){
+        avX=-avX;
+    }
+    if(avY<0){
+        avY=-avY;
+    }
     return sum - avX*avY;
 }
 
@@ -56,18 +62,30 @@ Line linear_reg(Point** points, int size){
     }
     float a = cov(x,y,size)/var(x,size);
     float b = avg(y,size)-(a*avg(x,size));
+    if(a<0){
+        a=-a;
+    }
+    if(b<0){
+        b=-b;
+    }
 	return Line(a,b);
 }
 
 // returns the deviation between point p and the line equation of the points
 float dev(Point p,Point** points, int size){
 	Line reg = linear_reg(points,size);
-	return reg.a*p.x+reg.b;
+	if((reg.a*p.x+reg.b - p.y)>=0)
+	    return reg.a*p.x+reg.b - p.y;
+	else
+        return -(reg.a*p.x+reg.b - p.y);
 }
 
 // returns the deviation between point p and the line
 float dev(Point p,Line l){
-    return l.a*p.x+l.b;
+    if((l.a*p.x+l.b - p.y)>=0)
+        return l.a*p.x+l.b - p.y;
+    else
+        return -(l.a*p.x+l.b - p.y);
 }
 
 
