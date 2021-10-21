@@ -1,7 +1,7 @@
 /*
  * animaly_detection_util.cpp
  *
- * Author: Gidon Tobin 320518020
+ * Authors: Gidon Tobin 320518020 Yohay Artzi 208061911
  */
 
 #include <math.h>
